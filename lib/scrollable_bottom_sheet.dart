@@ -382,10 +382,10 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
   ///
   /// See [example/main.dart] for example
   @override
-  void animateToMinimum(BuildContext context, {bool willPop = false}) {
+  void animateToMinimum(BuildContext context, {bool willPop = false, Duration duration}) {
     if (widget.minimumHeight == null) return;
 
-    _animateTo(_minimumHeight, onComplete: () {
+    _animateTo(_minimumHeight, duration: duration, onComplete: () {
       if (willPop) Navigator.pop(context);
     });
   }
@@ -395,8 +395,8 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
   ///
   /// See [example/main.dart] for example
   @override
-  void animateToZero(BuildContext context, {bool willPop = false}) {
-    _animateTo(0.0, onComplete: () {
+  void animateToZero(BuildContext context, {bool willPop = false, Duration duration}) {
+    _animateTo(0.0, duration: duration, onComplete: () {
       if (willPop) Navigator.pop(context);
     });
   }
@@ -406,8 +406,8 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
   ///
   /// See [example/main.dart] for example
   @override
-  void animateToHalf(BuildContext context) {
-    _animateTo(_halfHeight);
+  void animateToHalf(BuildContext context, {Duration duration}) {
+    _animateTo(_halfHeight, duration: duration);
   }
 
   /// animate current Bottom Sheet to maximum height available
@@ -415,20 +415,20 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
   ///
   /// See [example/main.dart] for example
   @override
-  void animateToFull(BuildContext context) {
+  void animateToFull(BuildContext context, {Duration duration}) {
     setState(() {
       _requestToFull = true;
     });
   }
 
-  _animateTo(double targetHeight, {VoidCallback onComplete}) {
+  _animateTo(double targetHeight, {VoidCallback onComplete, Duration duration = const Duration(milliseconds: 200)}) {
     if (!this.mounted) return;
 
     if (_scrollController.hasClients && _scrollController.position.pixels > 0) {
-      _scrollController.animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.ease);
+      _scrollController.animateTo(0.0, duration: duration, curve: Curves.ease);
     }
 
-    AnimationController animationController = AnimationController(duration: const Duration(milliseconds: 200), vsync: this);
+    AnimationController animationController = AnimationController(duration: duration, vsync: this);
 
     _activeAnimController = animationController;
 

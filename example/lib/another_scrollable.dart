@@ -46,6 +46,8 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
     "Raspberry",
     "Tomato"
   ];
+  
+  int i = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +64,13 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("Scrollable by content"),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.access_time, ), onPressed: (){
+            controller.setMinimumHeight(i%2 == 0 ? 0 : 80);
+            controller.animateToZero(context, duration: Duration(microseconds: 1));
+            i ++;
+          })
+        ],
       ),
       body: Stack(
         children: <Widget>[

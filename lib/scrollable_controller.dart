@@ -11,25 +11,25 @@ abstract class ScrollableInterface {
   /// you can call this method from Global Key
   ///
   /// See [example/main.dart] for example
-  void animateToMinimum(BuildContext context, {bool willPop = false});
+  void animateToMinimum(BuildContext context, {bool willPop = false, Duration duration = const Duration(milliseconds: 200)});
 
   /// animate current Bottom Sheet to 0.0
   /// you can call this method from Global Key
   ///
   /// See [example/main.dart] for example
-  void animateToZero(BuildContext context, {bool willPop = false});
+  void animateToZero(BuildContext context, {bool willPop = false, Duration duration = const Duration(milliseconds: 200)});
 
   /// animate current Bottom Sheet to initialHeight
   /// you can call this method from Global Key
   ///
   /// See [example/main.dart] for example
-  void animateToHalf(BuildContext context);
+  void animateToHalf(BuildContext context, {Duration duration = const Duration(milliseconds: 200)});
 
   /// animate current Bottom Sheet to maximum height available
   /// you can call this method from Global Key
   ///
   /// See [example/main.dart] for example
-  void animateToFull(BuildContext context);
+  void animateToFull(BuildContext context, {Duration duration = const Duration(milliseconds: 200)});
 }
 
 class ScrollableController {
@@ -53,31 +53,31 @@ class ScrollableController {
   /// you can call this method from Global Key
   ///
   /// See [example/main.dart] for example
-  void animateToMinimum(BuildContext context, {bool willPop = false}) {
-    if (_interface != null) _interface.animateToMinimum(context, willPop: willPop);
+  void animateToMinimum(BuildContext context, {bool willPop = false, Duration duration = const Duration(milliseconds: 200)}) {
+    if (_interface != null) _interface.animateToMinimum(context, willPop: willPop, duration: duration);
   }
 
   /// animate current Bottom Sheet to 0.0
   /// you can call this method from Global Key
   ///
   /// See [example/main.dart] for example
-  void animateToZero(BuildContext context, {bool willPop = false}) {
-    if (_interface != null) _interface.animateToZero(context, willPop: willPop);
+  void animateToZero(BuildContext context, {bool willPop = false, Duration duration = const Duration(milliseconds: 200)}) {
+    if (_interface != null) _interface.animateToZero(context, willPop: willPop, duration: duration);
   }
 
   /// animate current Bottom Sheet to initialHeight
   /// you can call this method from Global Key
   ///
   /// See [example/main.dart] for example
-  void animateToHalf(BuildContext context) {
-    if (_interface != null) _interface.animateToHalf(context);
+  void animateToHalf(BuildContext context, {Duration duration = const Duration(milliseconds: 200)}) {
+    if (_interface != null) _interface.animateToHalf(context, duration: duration);
   }
 
   /// animate current Bottom Sheet to maximum height available
   /// you can call this method from Global Key
   ///
   /// See [example/main.dart] for example
-  void animateToFull(BuildContext context) {
-    if (_interface != null) _interface.animateToFull(context);
+  void animateToFull(BuildContext context, {Duration duration = const Duration(milliseconds: 200)}) {
+    if (_interface != null) _interface.animateToFull(context, duration: duration);
   }
 }
