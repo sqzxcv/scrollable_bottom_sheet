@@ -248,7 +248,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
         Widget child = LayoutBuilder(builder: (BuildContext context, BoxConstraints constraints) {
 //            print("容器最size:(${constraints.maxWidth}, ${constraints.maxHeight})");
             
-            _fullHeight = constraints.maxHeight;
+            _fullHeight ??= constraints.maxHeight;
             
             //for the first run
             if (_currentHeight == null) {
@@ -323,7 +323,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
     
     void _dragStart(DragStartDetails details) {
         
-        print("dragStart: ${details.globalPosition}");
+//        print("dragStart: ${details.globalPosition}");
         if (_scrollController.position.maxScrollExtent > 0.0)
             _drag = _scrollController.position.drag(details, _disposeDrag);
     }
@@ -337,7 +337,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
             if (_scrollController.offset <= 0.0) {
                 if (_currentHeight > 0.0) {
                     if (this.mounted) {
-                        print("1");
+//                        print("1");
                         setState(() {
                             _currentHeight += details.primaryDelta * -1;
                         });
@@ -350,7 +350,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
             
             if (_currentHeight < _fullHeight) {
                 if (this.mounted) {
-                    print("2");
+//                    print("2");
                     setState(() {
                         _currentHeight += details.primaryDelta * -1;
                     });
@@ -362,7 +362,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
             DragUpdateDetails d = details;
             
             if (_scrollController.offset + -d.primaryDelta < 0.0) {
-                print("3");
+//                print("3");
                 Offset newGlobalPosition = Offset(
                     details.globalPosition.dx, details.globalPosition.dy + -(d.primaryDelta) + _scrollController.offset);
                 Offset newDelta = Offset(details.delta.dx, _scrollController.offset);
@@ -380,18 +380,18 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
     
     void _dragEnd(DragEndDetails details) {
         
-        print("DragEnd: ${details.velocity}");
+//        print("DragEnd: ${details.velocity}");
         double targetHeight;
         
         if (_scrollController.position.pixels < 0.0) {
-            print("10");
+//            print("10");
             _scrollController.position
                 .animateTo(0.0, duration: Duration(milliseconds: 200), curve: Curves.ease);
         }
         
         if (_currentHeight <= _halfHeight) {
             if (widget.snapBelow && _scrollController.hasClients && _scrollController.position.pixels <= 0) {
-                print("11");
+//                print("11");
                 if (_lastScrollDirection == ScrollDirection.down) {
                     targetHeight = _minimumHeight;
                 } else {
@@ -400,7 +400,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
             }
         } else {
             if (widget.snapAbove && _scrollController.hasClients && _scrollController.position.pixels <= 0) {
-                print("12");
+//                print("12");
                 if (_lastScrollDirection == ScrollDirection.down) {
                     targetHeight = _halfHeight;
                 } else {
@@ -446,7 +446,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
 
             if (_currentHeight > 0.0) {
                 if (this.mounted) {
-                    print("1");
+//                    print("1");
                     setState(() {
                         _currentHeight += details.primaryDelta * -1;
                     });
@@ -458,7 +458,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
         
             if (_currentHeight < _fullHeight) {
                 if (this.mounted) {
-                    print("2");
+//                    print("2");
                     setState(() {
                         _currentHeight += details.primaryDelta * -1;
                     });
@@ -470,7 +470,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
             DragUpdateDetails d = details;
         
             if (_scrollController.offset + -d.primaryDelta < 0.0) {
-                print("3");
+//                print("3");
                 Offset newGlobalPosition = Offset(
                     details.globalPosition.dx, details.globalPosition.dy + -(d.primaryDelta) + _scrollController.offset);
                 Offset newDelta = Offset(details.delta.dx, _scrollController.offset);
@@ -488,7 +488,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
 
     void _dragHoverHeaderEnd(DragEndDetails details) {
     
-        print("DragEnd: ${details.velocity}");
+//        print("DragEnd: ${details.velocity}");
         double targetHeight;
     
 //        if (_scrollController.position.pixels < 0.0) {
@@ -500,7 +500,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
     
         if (_currentHeight <= _halfHeight) {
             if (widget.snapBelow && _scrollController.hasClients) {
-                print("11");
+//                print("11");
                 if (_lastScrollDirection == ScrollDirection.down) {
                     targetHeight = _minimumHeight;
                 } else {
@@ -509,7 +509,7 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
             }
         } else {
             if (widget.snapAbove && _scrollController.hasClients) {
-                print("12");
+//                print("12");
                 if (_lastScrollDirection == ScrollDirection.down) {
                     needScrollToTop = true;
                     targetHeight = _halfHeight;
@@ -656,6 +656,11 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
     @override
     void setMinimumHeight(double newMinimumHeight) {
         _minimumHeight = newMinimumHeight;
+    }
+    
+    void setFullHeight(double newFullHeight) {
+        
+        _fullHeight = newFullHeight;
     }
     
     void setScrollState(ScrollState sState) {

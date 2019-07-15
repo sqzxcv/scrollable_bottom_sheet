@@ -25,6 +25,9 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
       _scaffoldKey.currentState.showBottomSheet<void>(_bottomSheetBuilder);
     });
     */
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.setFullHeight(400);
+    });
   }
 
   List<Order> orders = [];
@@ -69,7 +72,7 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
           IconButton(icon: Icon(Icons.access_time, ), onPressed: (){
             controller.setMinimumHeight(i%2 == 0 ? 0 : 80);
 //            controller.animateToZero(context, duration: Duration(microseconds: 1));
-            controller.setScrollState(ScrollState.full);
+            controller.setScrollState(ScrollState.minimum);
             i ++;
           })
         ],

@@ -33,6 +33,8 @@ abstract class ScrollableInterface {
   void animateToFull(BuildContext context, {Duration duration = const Duration(milliseconds: 200)});
 
   void setScrollState(ScrollState sState);
+
+  void setFullHeight(double newFullHeight);
 }
 
 class ScrollableController {
@@ -86,5 +88,9 @@ class ScrollableController {
 
   void setScrollState(ScrollState sState) {
     if (_interface != null) _interface.setScrollState(sState);
+  }
+
+  void setFullHeight(double newFullHeight) {
+    if (_interface != null) _interface.setFullHeight(newFullHeight);
   }
 }
