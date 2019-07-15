@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:scrollable_bottom_sheet/scrollable_bottom_sheet.dart';
 import 'package:scrollable_bottom_sheet/scrollable_controller.dart';
 
@@ -67,7 +68,8 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
         actions: <Widget>[
           IconButton(icon: Icon(Icons.access_time, ), onPressed: (){
             controller.setMinimumHeight(i%2 == 0 ? 0 : 80);
-            controller.animateToZero(context, duration: Duration(microseconds: 1));
+//            controller.animateToZero(context, duration: Duration(microseconds: 1));
+            controller.setScrollState(ScrollState.minimum);
             i ++;
           })
         ],
@@ -105,6 +107,8 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
       _buildHeader(context),
       _buildContent(),
       autoPop: false,
+      snapAbove: true,
+      snapBelow: true,
       scrollTo: ScrollState.minimum,
       controller: controller,
     );
@@ -127,17 +131,32 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
   _buildContent() {
     int counter = 0;
 
-    return Column(
-        children: orders.map((order) {
-      List<Widget> children = [];
+    List list =  <Widget>[
+  
+      SliverStaggeredGrid.countBuilder(
+//                        primary: true,
+//                        shrinkWrap: true,
+        crossAxisCount: 4,
+        mainAxisSpacing: 4.0,
+        crossAxisSpacing: 4.0,
+        itemCount: 100,
+        itemBuilder: (context, index) {
+      
+          return Card(
+            color: Colors.red,
+            child: Text("文本:$index"),
+          );
+        },
+        staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
+      ),
+      SliverToBoxAdapter (
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      )
+    ];
 
-      children.add(ListTile(title: Text(order.name), subtitle: Text("Qty: ${order.qty} pcs")));
-
-      if (counter < orders.length) {
-        children.add(Container(color: Colors.black38, height: 0.5));
-      }
-      return Column(children: children);
-    }).toList());
+    return list;
   }
 }
 

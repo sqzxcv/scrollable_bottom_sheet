@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scrollable_bottom_sheet/scrollable_bottom_sheet.dart';
 
 abstract class ScrollableInterface {
   //re-set minimum height to make [ScrollableBottomSheetByContent] possible
@@ -30,6 +31,8 @@ abstract class ScrollableInterface {
   ///
   /// See [example/main.dart] for example
   void animateToFull(BuildContext context, {Duration duration = const Duration(milliseconds: 200)});
+
+  void setScrollState(ScrollState sState);
 }
 
 class ScrollableController {
@@ -79,5 +82,9 @@ class ScrollableController {
   /// See [example/main.dart] for example
   void animateToFull(BuildContext context, {Duration duration = const Duration(milliseconds: 200)}) {
     if (_interface != null) _interface.animateToFull(context, duration: duration);
+  }
+
+  void setScrollState(ScrollState sState) {
+    if (_interface != null) _interface.setScrollState(sState);
   }
 }

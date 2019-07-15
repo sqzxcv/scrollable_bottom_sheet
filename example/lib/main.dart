@@ -117,25 +117,25 @@ class _BottomSheetDemoState extends State<BottomSheetDemo> with TickerProviderSt
             _currentDirection = "down";
           }
         },
-        child: Container(
-            color: Colors.greenAccent,
-            margin: EdgeInsets.only(bottom: 50.0),
-            child: Padding(
-                padding: const EdgeInsets.all(32.0),
-                child: Column(children: [
-                  InkWell(
-                    child: Container(color: Colors.red, height: 57.0),
-                    onTap: () {
-                      controller.animateToZero(context, willPop: true);
-                    },
-                  ),
-                  Text('This is a Material persistent bottom sheet. Drag downwards to dismiss it.',
-                      textAlign: TextAlign.center, style: TextStyle(color: themeData.accentColor, fontSize: 24.0)),
-                  Column(
-                      children: List.generate(100, (index) {
-                    return Text("Text $index");
-                  }))
-                ]))),
+//        child: Container(
+//            color: Colors.greenAccent,
+//            margin: EdgeInsets.only(bottom: 50.0),
+//            child: Padding(
+//                padding: const EdgeInsets.all(32.0),
+//                child: Column(children: [
+//                  InkWell(
+//                    child: Container(color: Colors.red, height: 57.0),
+//                    onTap: () {
+//                      controller.animateToZero(context, willPop: true);
+//                    },
+//                  ),
+//                  Text('This is a Material persistent bottom sheet. Drag downwards to dismiss it.',
+//                      textAlign: TextAlign.center, style: TextStyle(color: themeData.accentColor, fontSize: 24.0)),
+//                  Column(
+//                      children: List.generate(100, (index) {
+//                    return Text("Text $index");
+//                  }))
+//                ]))),
       ),
       Positioned(
           bottom: 0.0,
