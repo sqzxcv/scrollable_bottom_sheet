@@ -18,6 +18,7 @@ class ScrollableBottomSheetByContent extends StatefulWidget {
     final bool snapBelow;
     final bool autoPop;
     final ScrollState scrollTo;
+    /// header 滚出窗口后, hoverHeaderWidget会出现在顶部, 通过hoverHeaderWidget可以实现header的悬停功能
     final Widget hoverHeaderWidget;
     /// 存放在 custom sliver中的可滚动的widgets
     final List<Widget> sliverList;
