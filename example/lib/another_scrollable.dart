@@ -69,7 +69,7 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
           IconButton(icon: Icon(Icons.access_time, ), onPressed: (){
             controller.setMinimumHeight(i%2 == 0 ? 0 : 80);
 //            controller.animateToZero(context, duration: Duration(microseconds: 1));
-            controller.setScrollState(ScrollState.minimum);
+            controller.setScrollState(ScrollState.full);
             i ++;
           })
         ],
@@ -109,8 +109,9 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
       autoPop: false,
       snapAbove: true,
       snapBelow: true,
-      scrollTo: ScrollState.minimum,
+      scrollTo: ScrollState.full,
       controller: controller,
+      hoverHeaderWidget: this._buildHoldHeader(context),
     );
   }
 
@@ -121,6 +122,20 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
         color: Theme.of(context).primaryColor,
         child: Row(mainAxisSize: MainAxisSize.min, children: [
           Container(child: Icon(Icons.shopping_cart, color: Colors.white), margin: EdgeInsets.all(8.0)),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Text("You've got order", style: Theme.of(context).primaryTextTheme.title),
+            Text("Swipe up for details", style: Theme.of(context).primaryTextTheme.body1)
+          ])
+        ]));
+  }
+
+  _buildHoldHeader(BuildContext context) {
+    return Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(16.0),
+        color: Colors.red,
+        child: Row(mainAxisSize: MainAxisSize.min, children: [
+          Container(child: Icon(Icons.shopping_cart, color: Colors.yellow), margin: EdgeInsets.all(8.0)),
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Text("You've got order", style: Theme.of(context).primaryTextTheme.title),
             Text("Swipe up for details", style: Theme.of(context).primaryTextTheme.body1)
