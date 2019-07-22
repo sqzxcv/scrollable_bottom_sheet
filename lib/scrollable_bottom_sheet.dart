@@ -662,7 +662,8 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
         
         _fullHeight = newFullHeight;
     }
-    
+
+    @override
     void setScrollState(ScrollState sState) {
     
         setState(() {

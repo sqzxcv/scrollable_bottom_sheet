@@ -62,7 +62,7 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
     });
 
     return Scaffold(
-      bottomSheet: _bottomSheetBuilder(context),
+//      bottomSheet: _bottomSheetBuilder(context),
       //if you use this bottomSheet, bottom Sheet will not put into Route Stack,
       // so when you press back button, it will pop this page
       key: _scaffoldKey,
@@ -78,6 +78,7 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
         ],
       ),
       body: Stack(
+        alignment: Alignment.bottomCenter,
         children: <Widget>[
           Center(child: CircularProgressIndicator()),
           Container(
@@ -100,6 +101,12 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
               ),
             ),
           ),
+          Positioned(
+//            top: 0,
+//            bottom: 100,
+            child: _bottomSheetBuilder(context),
+            
+          )
         ],
       ),
     );
@@ -161,7 +168,7 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
         itemBuilder: (context, index) {
       
           return Card(
-            color: Colors.red,
+            color: Colors.white70,
             child: Text("文本:$index"),
           );
         },
