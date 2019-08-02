@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_bottom_sheet/scrollable_controller.dart';
+import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 
 typedef AnimationCallback = void Function(double value);
 typedef StateCallback = void Function(ScrollState state);
@@ -11,6 +12,10 @@ enum ScrollDirection { none, up, down }
 enum ScrollState { full, half, minimum }
 
 class ScrollableBottomSheetByContent extends StatefulWidget {
+    
+    final VoidCallback loadingCallback;
+    bool isLoading;
+    
     final Widget header;
     final ScrollableController controller;
     final StateCallback callback;
@@ -22,9 +27,10 @@ class ScrollableBottomSheetByContent extends StatefulWidget {
     final Widget hoverHeaderWidget;
     /// 存放在 custom sliver中的可滚动的widgets
     final List<Widget> sliverList;
-    
+
     ScrollableBottomSheetByContent(this.header, this.sliverList,
-                                   {ScrollableController controller, bool snapAbove, bool snapBelow, bool autoPop, this.callback, ScrollState scrollTo, this.hoverHeaderWidget})
+                                   {ScrollableController controller, bool snapAbove, bool snapBelow, bool autoPop, this.callback, ScrollState scrollTo, this.hoverHeaderWidget,
+                                       this.loadingCallback, this.isLoading = false})
         : this.controller = controller ?? ScrollableController(),
             this.snapAbove = snapAbove ?? true,
             this.snapBelow = snapBelow ?? true,
@@ -74,6 +80,8 @@ class _ScrollableBottomSheetByContentState extends State<ScrollableBottomSheetBy
             halfHeight: 0.0,
             mayExceedChildHeight: true,
             hoverHeaderWidget: this.widget.hoverHeaderWidget,
+            loadingCallback: widget.loadingCallback,
+            isLoading: widget.isLoading,
         );
     }
 }
@@ -85,6 +93,10 @@ class ScrollableBottomSheet extends StatefulWidget {
     ///
     /// See [ScrollableInterface]
     final ScrollableController controller;
+
+    bool isLoading;
+    
+    final VoidCallback loadingCallback;
     
     /// The Bottom Sheet's height when first open
     /// Must not be null
@@ -169,6 +181,8 @@ class ScrollableBottomSheet extends StatefulWidget {
                               bool mayExceedChildHeight,
                               this.sliverList,
                               this.hoverHeaderWidget,
+                              this.loadingCallback,
+                              this.isLoading,
                           }): assert(headerWidget != null),
             this.controller = controller ?? ScrollableController(),
             this.minimumHeight = minimumHeight ?? 0.0,
@@ -283,11 +297,19 @@ class _ScrollableBottomSheetState extends State<ScrollableBottomSheet>
                             },
                             onVerticalDragUpdate: _dragUpdate,
                             onVerticalDragStart: _dragStart,
-                            child:  CustomScrollView(
-                                controller: _scrollController,
-                                physics: const NeverScrollableScrollPhysics(),
-                                slivers: list,
+                            child: LazyLoadScrollView(
+                                onEndOfPage: () {
+                                    widget.loadingCallback();
+                                }, // The callback when reaching the end of the list
+                                scrollOffset: 100, // Pixels from the bottom that should trigger a callback
+                                isLoading: widget.isLoading,
+                                child: CustomScrollView(
+                                    controller: _scrollController,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    slivers: list,
+                                ),
                             ),
+                            
                         )),
                     Positioned(
                         child: GestureDetector(

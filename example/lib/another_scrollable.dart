@@ -26,7 +26,7 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
     });
     */
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.setFullHeight(400);
+      controller.setFullHeight(800);
     });
   }
 
@@ -122,6 +122,11 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
       scrollTo: ScrollState.full,
       controller: controller,
       hoverHeaderWidget: this._buildHoldHeader(context),
+      refreshController: RefreshController(),
+      loadingCallback: (){
+        print("load more");
+      },
+      couldPullUp: true,
     );
   }
 
@@ -174,11 +179,11 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
         },
         staggeredTileBuilder: (index) => new StaggeredTile.fit(2),
       ),
-      SliverToBoxAdapter (
-        child: Center(
-          child: CircularProgressIndicator(),
-        ),
-      )
+//      SliverToBoxAdapter (
+//        child: Center(
+//          child: CircularProgressIndicator(),
+//        ),
+//      )
     ];
 
     return list;
