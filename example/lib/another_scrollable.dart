@@ -122,11 +122,11 @@ class _AnotherScrollableState extends State<AnotherScrollable> with TickerProvid
       scrollTo: ScrollState.full,
       controller: controller,
       hoverHeaderWidget: this._buildHoldHeader(context),
-      refreshController: RefreshController(),
+//      refreshController: RefreshController(),
       loadingCallback: (){
         print("load more");
       },
-      couldPullUp: true,
+//      couldPullUp: true,
     );
   }
 
